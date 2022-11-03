@@ -1,0 +1,55 @@
+Example Request
+import http.client
+
+conn = http.client.HTTPSConnection("api.aceservices.com")
+
+payload = "[{\"ProshipRequest\":{\"RequestDate\":\"02/22/2018 06:00:00 PM\",\"Channel\":\"ECOM\",\"ServiceRequestType\":\"Rate Shop\",\"ShipperReference\":\"Order number 1\"},\"ShipmentDetails\":{\"SurchargeFlagStoreNumber\":\"00500\",\"Address1\":\"404 E Front St\",\"Address2\":\"APT 104H\",\"City\":\"Battle Mountain\",\"Code\":\"NV\",\"Company\":\"Royal Hardware\",\"Contact\":null,\"Country\":\"US\",\"Phone\":\"7756352422\",\"PostalCode\":\"89820\",\"Reference\":\"420590000041\",\"ResidentialFlag\":false,\"DeliveryFlag\":false,\"DeclaredValueAmt\":23.7,\"HoldAtLocation\":false,\"InsideDelivery\":false,\"Proof\":false,\"ProofRequireSignature\":false,\"ProofRequireSignatureAdult\":false,\"SignatureRelease\":false,\"Refrigerated\":false,\"Shipper\":\"IL01\",\"ItemList\":[{\"SKU\":\"10046\",\"Quantity\":2}]}}]"
+
+headers = {
+    'X-IBM-Client-Id': "REPLACE_CLIENT_ID",
+    'X-IBM-Client-Secret': "REPLACE_THIS_SECRET_TOKEN",
+    'content-type': "application/json",
+    'accept': "application/json"
+    }
+
+conn.request("POST", "/qa/ShipEstimate", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+
+
+
+Example Response
+Definition
+POST https://api.aceservices.com/qa/ShipEstimate
+Response
+[
+  {
+    "ResponseDate": "2/13/2018 12:31:17 PM",
+    "ShipperReference": "Order number 1",
+    "Messages": null,
+    "ShippingMethodCode": "BWTI_UPS.UPS.GND",
+    "ShippingMethodName": "Ground",
+    "ShippingZoneCode": "United States",
+    "isValid": true,
+    "CurrencyCode": "USD",
+    "Price": 13.87,
+    "DeliveryDate": "02/27/2018",
+    "DeliveryTime": "10:00 AM"
+  },
+  {
+    "ResponseDate": "2/13/2018 12:31:17 PM",
+    "ShipperReference": "Order number 1",
+    "Messages": null,
+    "ShippingMethodCode": "BWTI_UPS.UPS.NDA",
+    "ShippingMethodName": "Next Day Delivery",
+    "ShippingZoneCode": "United States",
+    "isValid": true,
+    "CurrencyCode": "USD",
+    "Price": 66.57,
+    "DeliveryDate": "02/24/2018",
+    "DeliveryTime": "10:00 AM"
+  }
+]
