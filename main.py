@@ -22,7 +22,6 @@ try:
 except Exception as inst:
     print('Reading error!')
     print(inst)
-    print('\n')
 
 end_time_1 = time.time()
 print("Reading Time:")
@@ -40,6 +39,7 @@ with ThreadPoolExecutor(max_workers=max_multi_thread_count) as executor:
     for task in as_completed(threads):
         try:
             mock_response=task.result()["data"]
+            print(mock_response)
             api_response = []
             if mock_response != "":
                 api_response = json.loads(mock_response)
@@ -59,7 +59,6 @@ with ThreadPoolExecutor(max_workers=max_multi_thread_count) as executor:
         except Exception as inst:
             print('Building data and interacting APIs error!!!')
             print(inst)
-            print('\n')
 
 end_time_2 = time.time()   
 print("API Response Time:")
@@ -71,7 +70,6 @@ try:
 except Exception as inst:
     print('Building data and interacting APIs error')
     print(inst)
-    print('\n')
 
 end_time = time.time()
 print(end_time-start_time)
